@@ -47,7 +47,38 @@ const getContact = (name) => {
   })
 }
 
+const updateContact = (_id, contact) => {
+  Contact.update({ _id }, contact)
+  .exec((err, status) => {
+    assert.equal(null, err);
+    console.info('Updated successfully');
+    db.disconnect();
+  });
+};
+
+const deleteContact = (_id) => {
+  Contact.remove({ _id })
+  .exec((err, status) => {
+    assert.equal(null, err);
+    console.info('Deleted successfully');
+    db.disconnect();
+  })
+}
+
+const getContactList = () => {
+  Contact.find()
+  .exec((err, contacts) => {
+    assert.equal(null, err);
+    console.info(contacts);
+    console.info(`${contacts.length} matches`);
+    db.disconnect();
+  })
+}
+
 module.exports = {
   addContact,
-  getContact
+  getContact,
+  updateContact,
+  deleteContact,
+  getContactList
 }
